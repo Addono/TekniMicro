@@ -1,0 +1,2 @@
+webrepl==0.2.0
+iwebrepl==0.2.0
