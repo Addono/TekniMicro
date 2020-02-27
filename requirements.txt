@@ -1,2 +1,3 @@
+# Tools necessary for deploying over WebREPL
 webrepl==0.2.0
 iwebrepl==0.2.0

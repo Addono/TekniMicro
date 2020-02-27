@@ -18,6 +18,7 @@ def write_color(red, green, blue, brightness):
 
 import ubinascii
 import machine
+#from random import Random
 import json
 import micropython
 import time
@@ -62,7 +63,7 @@ def callback(topic: bytes, msg: bytes):
 def connect_and_subscribe():
   server = CONFIG['MQTT_HOSTNAME']
   client = MQTTClient(
-    client_id=ubinascii.hexlify(machine.unique_id()),
+    client_id=CONFIG['MQTT_CLIENT_ID'],
     server=server,
     user=CONFIG['MQTT_USERNAME'], 
     password=CONFIG['MQTT_PASSWORD'],
