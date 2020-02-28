@@ -12,7 +12,6 @@ declare -a files=(
     "boot.py"
     "main.py"
     "config.py"
-    "umqttsimple.py"
 )
 
 echo "Deploying to ${WEBREPL_HOST}"

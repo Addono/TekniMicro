@@ -22,7 +22,7 @@ import machine
 import json
 import micropython
 import time
-from umqttsimple import MQTTClient
+from umqtt.robust import MQTTClient
 from config import load_config
 
 CONFIG = load_config()
@@ -91,6 +91,7 @@ try:
     # The function requires that an argument is passed, hence the need of a lambda
     try:
       micropython.schedule(lambda _: client.check_msg(), None)
+      time.sleep(0.3)
     except RuntimeError:
       pass
 except Exception as e:
