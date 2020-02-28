@@ -45,6 +45,7 @@ def callback(topic: bytes, msg: bytes):
 
     if red is not None and green is not None and blue is not None:
       write_color(red, green, blue, brightness)
+
   elif topic.endswith("/state"):
     payload = json.loads(msg)
 
@@ -76,20 +77,12 @@ def connect_and_subscribe():
   
   return client
 
-def restart():
-  print('Reconnecting...')
-
-  machine.reset()
-
-
+  
 try:
   client = connect_and_subscribe()
 
   while True:
     client.wait_msg()
-  
-except Exception as e:
-  print("An unhandled exception occurred")
-  print("Exception: " + e)
-  time.sleep(10)
-  restart()
+
+except:
+  machine.reset()
