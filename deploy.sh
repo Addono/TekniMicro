@@ -4,7 +4,7 @@
 export $(egrep -v '^#' .env | xargs)
 
 echo "Generating config file"
-python create_config.py
+python create_config.py || { echo "Failed generating configuration" ; exit 1; }
 
 # Declare the list of files
 declare -a files=(
