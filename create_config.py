@@ -24,3 +24,4 @@ with open(PATH, "r+" if file_exists else "w") as config_file:
     # Write the config back to the file
     config_file.seek(0)  # Move the filepointer back to the start, otherwise the new config will be appended
     json.dump(config, config_file)
+    config_file.truncate() # Remove any remaining leftover present after overwriting
