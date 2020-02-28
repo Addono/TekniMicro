@@ -18,7 +18,6 @@ def write_color(red, green, blue, brightness):
 
 import ubinascii
 import machine
-#from random import Random
 import json
 import micropython
 import time
