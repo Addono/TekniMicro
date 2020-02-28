@@ -73,7 +73,7 @@ def connect_and_subscribe():
   client.connect()
   client.subscribe(TOPIC)
   
-  print('Connected to %s MQTT broker, subscribed to %s topic' % (server, TOPIC))
+  print('Connected to %s MQTT broker, subscribed to topic "%s"' % (server, str(TOPIC)))
   
   return client
 
@@ -96,7 +96,7 @@ try:
       pass
 except Exception as e:
   print("An unhandled exception occurred")
-  print(e)
+  print("Exception: " + e)
   time.sleep(10)
 finally:
   restart()
