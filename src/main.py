@@ -19,7 +19,6 @@ def write_color(red, green, blue, brightness):
 import ubinascii
 import machine
 import json
-import micropython
 import time
 from umqtt.robust import MQTTClient
 from config import load_config
@@ -69,8 +68,9 @@ def connect_and_subscribe():
   )
 
   client.set_callback(callback)
-  client.connect()
-  client.subscribe(TOPIC)
+
+  if not client.connect(clean_session=False):
+    client.subscribe(TOPIC)
   
   print('Connected to %s MQTT broker, subscribed to topic "%s"' % (server, str(TOPIC)))
   
@@ -86,16 +86,10 @@ try:
   client = connect_and_subscribe()
 
   while True:
-    # Schedule the update as to prevent blocking the REPL
-    # The function requires that an argument is passed, hence the need of a lambda
-    try:
-      micropython.schedule(lambda _: client.check_msg(), None)
-      time.sleep(0.3)
-    except RuntimeError:
-      pass
+    client.wait_msg()
+  
 except Exception as e:
   print("An unhandled exception occurred")
   print("Exception: " + e)
   time.sleep(10)
-finally:
   restart()
