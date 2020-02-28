@@ -1,7 +1,6 @@
-try:
-    import usocket as socket
-except:
-    import socket
+# Source https://github.com/micropython/micropython-lib/blob/master/umqtt.simple/umqtt/simple.py
+
+import usocket as socket
 import ustruct as struct
 from ubinascii import hexlify
 
