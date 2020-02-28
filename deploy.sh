@@ -15,6 +15,8 @@ declare -a files=(
     "umqttsimple.py"
 )
 
+echo "Deploying to ${WEBREPL_HOST}"
+
 # Copy all files
 for i in "${files[@]}"
 do
