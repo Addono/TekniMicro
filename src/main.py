@@ -7,14 +7,22 @@ GPIO_PIN = 5
 pin = machine.Pin(GPIO_PIN)
 strip = neopixel.NeoPixel(pin, PIXEL_COUNT)
 
-def write_color(red, green, blue, brightness):
-  rgb = tuple(int(round(c * 255 * brightness)) for c in (red, green, blue))
+current = (0.0, 0.0, 0.0)
+def write_color(target_rgb: tuple, brightness: float, alpha: float = 1.0):
+  global current
 
-  for i, _ in enumerate(strip):
+  # Mix the target value with the current value based on alpha
+  current = tuple(alpha * t * brightness + (1 - alpha) * c for t, c in zip(target_rgb, current))
+
+  # Scale the colors to [0, 255]
+  rgb = tuple(int(round(v * 255)) for v in current)
+  
+  # Set all leds in the strip to the new RGB value
+  for i in range(PIXEL_COUNT):
     strip[i] = rgb
   
+  # Write the new strip state
   strip.write()
-  
 
 import ubinascii
 import machine
@@ -29,12 +37,10 @@ TOPIC = b"tek/staging/light/1/#"
 
 
 brightness = None
-red = None
-green = None
-blue = None
+rgb = None
 
 def callback(topic: bytes, msg: bytes):
-  global red, green, blue, brightness
+  global brightness, rgb
   
   print((topic, msg))
 
@@ -42,20 +48,11 @@ def callback(topic: bytes, msg: bytes):
     payload = json.loads(msg)
 
     brightness = payload["brightness"]
-
-    if red is not None and green is not None and blue is not None:
-      write_color(red, green, blue, brightness)
-
   elif topic.endswith("/state"):
     payload = json.loads(msg)
 
     params = payload["params"]
-    red = params["red"]
-    green = params["green"]
-    blue = params["blue"]
-
-    if brightness is not None:
-      write_color(red, green, blue, brightness)
+    rgb = (params["red"], params["green"], params["blue"])
   else:
     print("Unknown topic encountered")
 
@@ -82,7 +79,10 @@ try:
   client = connect_and_subscribe()
 
   while True:
-    client.wait_msg()
+    client.check_msg()
 
-except:
+    if rgb is not None and brightness is not None:
+      write_color(rgb, brightness, alpha=0.025)
+
+finally:
   machine.reset()
