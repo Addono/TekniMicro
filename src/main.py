@@ -67,10 +67,13 @@ def connect_and_subscribe():
 
   client.set_callback(callback)
 
-  if not client.connect(clean_session=False):
-    client.subscribe(TOPIC)
+  client.connect(clean_session=True)
+
+  print('Connected to %s MQTT broker' % server)
   
-  print('Connected to %s MQTT broker, subscribed to topic "%s"' % (server, str(TOPIC)))
+  client.subscribe(TOPIC)
+  
+  print('Subscribed to topic "%s"' % str(TOPIC))
   
   return client
 
