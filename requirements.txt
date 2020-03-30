@@ -1,3 +1,6 @@
 # Tools necessary for deploying over WebREPL
 webrepl==0.2.0
 iwebrepl==0.2.0
+
+# Tools necessary for deploying over serial
+adafruit-ampy==1.0.7
