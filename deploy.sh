@@ -25,6 +25,7 @@ do
     echo "Copying $source_path"
 
     webreplcmd put $source_path $target_path || { echo "Failed copying $source_path" ; exit 1 ; }
+    #ampy put $source_path $target_path || { echo "Failed copying $source_path" ; exit 1 ; }
 done
 
 echo "All files copied"
