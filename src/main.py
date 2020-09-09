@@ -28,7 +28,20 @@ import ubinascii
 import machine
 import json
 import time
-from umqtt.robust import MQTTClient
+try:
+  from umqtt.robust import MQTTClient
+except:
+  print("MQTT library not available, try installing it using upip")
+  try:
+    import upip
+
+    upip.install("micropython-umqtt.simple")
+    upip.install("micropython-umqtt.robust")
+  except:
+    print("Failed installing umqtt")
+  finally:
+    from umqtt.robust import MQTTClient
+
 from config import load_config
 
 CONFIG = load_config()
