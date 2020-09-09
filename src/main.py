@@ -50,9 +50,10 @@ TOPIC = b"tek/staging/light/1/#"
 
 brightness = None
 rgb = None
+transition = None
 
 def callback(topic: bytes, msg: bytes):
-  global brightness, rgb
+  global brightness, rgb, transition
   
   print("Topic: ", topic, "Message: ", msg)
 
@@ -63,8 +64,8 @@ def callback(topic: bytes, msg: bytes):
   elif topic.endswith("/state"):
     payload = json.loads(msg)
 
-    params = payload["params"]
-    rgb = (params["red"], params["green"], params["blue"])
+    rgb = (payload["params"]["red"], payload["params"]["green"], payload["params"]["blue"])
+    transition = payload["transition"]
   else:
     print("Unknown topic encountered")
 
@@ -103,8 +104,13 @@ try:
       client.ping()
 
     # Update the LEDs when there is data
-    if rgb is not None and brightness is not None:
-      write_color(rgb, brightness, alpha=0.025)
+    if rgb is not None and brightness is not None and transition is not None:
+      if transition == "sudden":
+        alpha = 1
+      else:
+        alpha = 0.025
+
+      write_color(rgb, brightness, alpha=alpha)
 
 finally:
   machine.reset()
