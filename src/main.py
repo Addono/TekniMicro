@@ -47,12 +47,12 @@ CONFIG = load_config()
 
 TOPIC = b"tek/staging/light/1/#"
 
-
+# This holds the desired state according to received MQTT messages
 brightness = None
 rgb = None
 transition = None
 
-def callback(topic: bytes, msg: bytes):
+def update_state_from_mqtt_message(topic: bytes, msg: bytes):
   global brightness, rgb, transition
   
   print("Topic: ", topic, "Message: ", msg)
@@ -78,7 +78,7 @@ def connect_and_subscribe():
     password=CONFIG['MQTT_PASSWORD'],
   )
 
-  client.set_callback(callback)
+  client.set_callback(update_state_from_mqtt_message)
 
   client.connect(clean_session=True)
 
