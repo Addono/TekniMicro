@@ -55,7 +55,7 @@ rgb = None
 def callback(topic: bytes, msg: bytes):
   global brightness, rgb
   
-  print((topic, msg))
+  print("Topic: ", topic, "Message: ", msg)
 
   if topic.endswith("/brightness"):
     payload = json.loads(msg)
