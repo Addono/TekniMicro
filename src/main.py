@@ -29,18 +29,17 @@ import machine
 import json
 import time
 try:
-  from umqtt.robust import MQTTClient
+  from umqtt.simple import MQTTClient
 except:
   print("MQTT library not available, try installing it using upip")
   try:
     import upip
 
     upip.install("micropython-umqtt.simple")
-    upip.install("micropython-umqtt.robust")
   except:
     print("Failed installing umqtt")
   finally:
-    from umqtt.robust import MQTTClient
+    from umqtt.simple import MQTTClient
 
 from config import load_config
 
@@ -90,13 +89,20 @@ def connect_and_subscribe():
   
   return client
 
-  
 try:
   client = connect_and_subscribe()
 
+  count = 0
   while True:
+    # Check for new messages to arrive
     client.check_msg()
 
+    # Regularly ping the server
+    count = (count + 1) % 250
+    if count == 0:
+      client.ping()
+
+    # Update the LEDs when there is data
     if rgb is not None and brightness is not None:
       write_color(rgb, brightness, alpha=0.025)
 
