@@ -92,27 +92,27 @@ def connect_and_subscribe():
   
   return client
 
-try:
-  client = connect_and_subscribe()
+while True:
+  try:
+    client = connect_and_subscribe()
 
-  count = 0
-  while True:
-    # Check for new messages to arrive
-    client.check_msg()
+    count = 0
+    while True:
+      # Check for new messages to arrive
+      client.check_msg()
 
-    # Regularly ping the server
-    count = (count + 1) % 250
-    if count == 0:
-      client.ping()
+      # Regularly ping the server
+      count = (count + 1) % 250
+      if count == 0:
+        client.ping()
 
-    # Update the LEDs when there is data
-    if rgb is not None and brightness is not None and transition is not None:
-      if transition == "sudden":
-        alpha = 1
-      else:
-        alpha = 0.025
+      # Update the LEDs when there is data
+      if rgb is not None and brightness is not None and transition is not None:
+        if transition == "sudden":
+          alpha = 1
+        else:
+          alpha = 0.025
 
-      write_color(rgb, brightness, alpha=alpha)
-
-finally:
-  machine.reset()
+        write_color(rgb, brightness, alpha=alpha)
+  finally:
+    print("Restarting...")
