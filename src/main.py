@@ -78,6 +78,8 @@ def connect_and_subscribe():
     password=CONFIG['MQTT_PASSWORD'],
   )
 
+  print('Connecting to', server)
+
   client.set_callback(update_state_from_mqtt_message)
 
   client.connect(clean_session=True)
