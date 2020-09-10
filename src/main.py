@@ -114,5 +114,7 @@ while True:
           alpha = 0.025
 
         write_color(rgb, brightness, alpha=alpha)
+  except e:
+    print("Error occured:", e)
   finally:
     print("Restarting...")
