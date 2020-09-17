@@ -118,3 +118,7 @@ while True:
     print("Error occured:", str(e))
   finally:
     print("Restarting...")
+
+# Restart if everything else fails
+machine.reset()
+
