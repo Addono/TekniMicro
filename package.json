@@ -2,12 +2,17 @@
   "name": "teknimicro",
   "version": "1.0.0",
   "description": "Integrates micrcontroller powered NeoPixel LED strips with the TEknIoT project.",
-  "main": " ",
+  "main": "",
   "repository": "https://gitlab.com/tekniot/teknimicro.git",
   "author": "Adriaan Knapen <hi@aknapen.nl>",
   "license": "MIT",
   "private": false,
   "devDependencies": {
     "husky": "^4.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "black ."
+    }
   }
 }
