@@ -10,9 +10,13 @@
   "devDependencies": {
     "husky": "^4.3.0"
   },
+  "scripts": {
+    "lint": "black .",
+    "deploy": "./deploy.sh"
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "black ."
+      "pre-commit": "yarn lint"
     }
   }
 }
