@@ -4,3 +4,7 @@ iwebrepl==0.2.0
 
 # Tools necessary for deploying over serial
 adafruit-ampy==1.0.7
+
+# Code linting
+black==20.8b1
+
