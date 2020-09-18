@@ -1,3 +1,21 @@
+from config import load_config
+import network
+
+CONFIG = load_config()
+
+
+def connect_to_wifi():
+
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    if not wlan.isconnected():
+        print("connecting to network...")
+        wlan.connect(CONFIG["WIFI_SSID"], CONFIG["WIFI_PASSWORD"])
+        while not wlan.isconnected():
+            pass
+    print("network config:", wlan.ifconfig())
+
+
 import neopixel
 import machine
 
@@ -107,6 +125,7 @@ def connect_and_subscribe():
 
 while True:
     try:
+        connect_to_wifi()
         client = connect_and_subscribe()
 
         count = 0
