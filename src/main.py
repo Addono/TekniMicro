@@ -69,7 +69,7 @@ from config import load_config
 
 CONFIG = load_config()
 
-TOPIC = b"tek/staging/light/1/#"
+TOPIC = b"tek/prod/light/1/#"
 
 # This holds the desired state according to received MQTT messages
 brightness = None
