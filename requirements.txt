@@ -6,5 +6,5 @@ iwebrepl==0.2.0
 adafruit-ampy==1.0.7
 
 # Code linting
-black==20.8b1
+black==24.3.0
 
